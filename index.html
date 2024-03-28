@@ -3,14 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Rock Dodger! (Beta)</title>
-  <link rel="stylesheet" type="text/css" href="index.css">
+  <title>Dodger Game</title>
+  <style>
+    #game {
+      width: 500px;
+      height: 500px;
+      border: 1px solid black;
+      position: relative;
+    }
+
+    #dodger {
+      width: 40px;
+      height: 40px;
+      background-color: red;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  </style>
 </head>
 <body>
   <div id="game">
-    <div id="dodger" style="bottom: 0px; left: 180px;"></div>
+    <div id="dodger"></div>
   </div>
-  <script type="text/javascript" src="index.js"></script>
+
+  <script>
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "ArrowLeft") {
+        moveDodgerLeft();
+      } else if (e.key === "ArrowRight") {
+        moveDodgerRight();
+      }
+    });
+
+    function moveDodgerLeft() {
+      const dodger = document.getElementById('dodger');
+      const left = parseInt(dodger.style.left) || 0;
+      if (left > 0) {
+        dodger.style.left = `${left - 1}px`;
+      }
+    }
+
+    function moveDodgerRight() {
+      const dodger = document.getElementById('dodger');
+      const left = parseInt(dodger.style.left) || 0;
+      const gameWidth = document.getElementById('game').offsetWidth;
+      const dodgerWidth = dodger.offsetWidth;
+      const rightEdge = gameWidth - dodgerWidth;
+      if (left < rightEdge) {
+        dodger.style.left = `${left + 1}px`;
+      }
+    }
+  </script>
 </body>
 </html>
